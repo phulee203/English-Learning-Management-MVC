@@ -1,0 +1,201 @@
+﻿<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewBag.Title — EnglishCenter</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: #f8f9fa; /* Màu nền xám nhẹ cho toàn trang */
+        }
+
+        /* Sidebar cố định bên trái */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            width: 260px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 15px rgba(0,0,0,.05);
+            overflow-y: auto; /* Cho phép cuộn nếu menu quá dài */
+        }
+
+        /* Nội dung chính đẩy sang phải */
+        .main-content {
+            margin-left: 260px; /* Bằng độ rộng sidebar */
+            padding: 30px;
+            min-height: 100vh;
+        }
+
+        /* Style cho Link Menu */
+        .sidebar .nav-link {
+            font-weight: 500;
+            color: #495057;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+            .sidebar .nav-link i {
+                font-size: 1.1rem;
+                margin-right: 10px;
+            }
+
+            /* Hiệu ứng khi active hoặc hover */
+            .sidebar .nav-link.active,
+            .sidebar .nav-link:hover {
+                color: #0d6efd;
+                background-color: rgba(13,110,253,.08);
+                font-weight: 600;
+            }
+
+        /* Dropdown User */
+        .dropdown-toggle::after {
+            margin-left: auto; /* Đẩy mũi tên sang phải cùng */
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="sidebar d-flex flex-column">
+        <a class="navbar-brand fw-bold mb-4 px-2 fs-4 text-dark text-decoration-none" href="/">
+            EnglishCenter<span class="text-primary">.</span>
+        </a>
+
+        <ul class="nav nav-pills flex-column mb-auto">
+
+            @* Lấy thông tin từ Session *@
+            @{
+                var role = Session["Role"] as string;
+                var userName = Session["UserName"] as string;
+
+                // Lấy tên action hiện tại để active menu
+                string currentAction = ViewContext.RouteData.Values["action"].ToString();
+            }
+
+            @* --- MENU DÀNH CHO ADMIN --- *@
+            @if (role == "Admin")
+            {
+                <li class="nav-item">
+                    <a class="nav-link @(currentAction == "Index" || currentAction == "ChiTietLopHoc" ? "active" : "")"
+                       href="@Url.Action("Index", "Admin")">
+                        <i class="bi bi-people-fill"></i> Quản lý lớp học
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(currentAction == "QuanLyGiaoVien" ? "active" : "")"
+                       href="@Url.Action("QuanLyGiaoVien", "Admin")">
+                        <i class="bi bi-person-video3"></i> Quản lý giáo viên
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(currentAction == "QuanLyHocVien" ? "active" : "")"
+                       href="@Url.Action("QuanLyHocVien", "Admin")">
+                        <i class="bi bi-person-fill"></i> Quản lý học viên
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(currentAction == "QuanLyHocPhi" ? "active" : "")"
+                       href="@Url.Action("QuanLyHocPhi", "Admin")">
+                        <i class="bi bi-currency-dollar"></i> Quản lý học phí
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(currentAction == "TaoBaoCao" ? "active" : "")"
+                       href="@Url.Action("TaoBaoCao", "Admin")">
+                        <i class="bi bi-bar-chart-fill"></i> Báo cáo thống kê
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(currentAction == "GuiThongBao" ? "active" : "")"
+                       href="@Url.Action("GuiThongBao", "Admin")">
+                        <i class="bi bi-envelope-fill"></i> Gửi thông báo
+                    </a>
+                </li>
+            }
+
+            @* --- MENU DÀNH CHO GIÁO VIÊN --- *@
+            else if (role == "GiaoVien")
+            {
+                <li class="nav-item">
+                    <a class="nav-link @(currentAction == "LopCuaToi" || currentAction == "NhapDiem" ? "active" : "")"
+                       href="@Url.Action("LopCuaToi", "GiaoVien")">
+                        <i class="bi bi-person-workspace"></i> Lớp phụ trách
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(currentAction == "XemThongBao" ? "active" : "")"
+                       href="@Url.Action("XemThongBao", "GiaoVien")">
+                        <i class="bi bi-bell-fill"></i> Thông báo
+                    </a>
+                </li>
+            }
+
+            @* --- MENU DÀNH CHO HỌC SINH / PHỤ HUYNH --- *@
+            else if (role == "HocSinh" || role == "PhuHuynh")
+            {
+                <li class="nav-item">
+                    <a class="nav-link @(currentAction == "XemLichHoc" ? "active" : "")"
+                       href="@Url.Action("XemLichHoc", "HocSinh")">
+                        <i class="bi bi-calendar-week me-2"></i> Thời khóa biểu
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(currentAction == "KetQuaHocTap" ? "active" : "")"
+                       href="@Url.Action("KetQuaHocTap", "HocSinh")">
+                        <i class="bi bi-journal-bookmark-fill me-2"></i> Kết quả học tập
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(currentAction == "DangKyMon" ? "active" : "")"
+                       href="@Url.Action("DangKyMon", "HocSinh")">
+                        <i class="bi bi-cart-plus-fill me-2"></i> Đăng ký môn mới
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(currentAction == "XemThongBao" ? "active" : "")"
+                       href="@Url.Action("XemThongBao", "HocSinh")">
+                        <i class="bi bi-bell-fill me-2"></i> Thông báo
+                    </a>
+                </li>
+            }
+        </ul>
+
+        <hr>
+
+        <div class="dropdown">
+            <a href="#" class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle p-2 rounded hover-bg-gray" data-bs-toggle="dropdown">
+                <img src="https://ui-avatars.com/api/?name=@(userName ?? "User")&background=random&color=fff" alt="" width="32" height="32" class="rounded-circle me-2">
+                <strong>@(userName ?? "Tài khoản")</strong>
+            </a>
+            <ul class="dropdown-menu shadow border-0">
+                <li><a class="dropdown-item" href="#">Thông tin cá nhân</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger" href="@Url.Action("Logout", "Account")">Đăng xuất</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        @RenderBody()
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

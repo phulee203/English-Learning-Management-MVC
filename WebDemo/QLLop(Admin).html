@@ -1,0 +1,86 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 fw-bold m-0">Quản lý Lớp học</h1>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addClassModal">
+        <i class="bi bi-plus-circle me-1"></i> Tạo lớp mới
+    </button>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped align-middle">
+                <thead>
+                    <tr>
+                        <th scope="col">Tên lớp</th>
+                        <th scope="col">Khóa học</th>
+                        <th scope="col">Giáo viên</th>
+                        <th scope="col">Sĩ số</th>
+                        <th scope="col">Lịch học</th>
+                        <th scope="col">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>IELTS 6.0+ (Tối T2-4-6)</td>
+                        <td>IELTS 6.0+</td>
+                        <td>Nguyễn Văn B</td>
+                        <td>10/12</td>
+                        <td>T2-4-6 (18:30)</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary" title="Phân công GV"><i class="bi bi-person-video3"></i></button>
+                            <button class="btn btn-sm btn-outline-secondary" title="Xem danh sách lớp"><i class="bi bi-people-fill"></i></button>
+                            <button class="btn btn-sm btn-outline-danger" title="Xóa"><i class="bi bi-trash"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Giao tiếp Căn bản (Tối T3-5-7)</td>
+                        <td>Giao tiếp Cơ bản</td>
+                        <td>Trần Thị C</td>
+                        <td>8/12</td>
+                        <td>T3-5-7 (19:00)</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary" title="Phân công GV"><i class="bi bi-person-video3"></i></button>
+                            <button class="btn btn-sm btn-outline-secondary" title="Xem danh sách lớp"><i class="bi bi-people-fill"></i></button>
+                            <button class="btn btn-sm btn-outline-danger" title="Xóa"><i class="bi bi-trash"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addClassModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Tạo lớp học mới</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Khóa học</label>
+                        <select class="form-select">
+                            <option>Giao tiếp Cơ bản</option>
+                            <option>IELTS 6.0+</option>
+                            <option>TOEIC Foundation</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Tên lớp</label>
+                        <input type="text" class="form-control" placeholder="Ví dụ: IELTS 6.0+ Tối T2-4-6">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Lịch học</label>
+                        <input type="text" class="form-control" placeholder="Ví dụ: T2-4-6 (18:30–20:30)">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Lưu và tạo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

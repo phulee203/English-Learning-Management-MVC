@@ -1,0 +1,37 @@
+﻿@model IEnumerable<WebDemo.Models.LopHocViewModel>
+@{
+    ViewBag.Title = "Lớp học của tôi";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h1 class="h3 fw-bold mb-4">Danh sách lớp phụ trách</h1>
+
+<div class="row g-4">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3">
+                        <span class="badge bg-primary">@item.TenKhoaHoc</span>
+                        <small class="text-secondary"><i class="bi bi-geo-alt-fill"></i> @item.LichHoc</small>
+                    </div>
+                    <h5 class="card-title fw-bold mb-3">@item.TenLop</h5>
+                    <p class="card-text text-secondary mb-4">
+                        Giáo viên: <strong>@item.TenGiaoVien</strong>
+                    </p>
+                    <a href="@Url.Action("NhapDiem", "GiaoVien", new { id = item.MaLop })" class="btn btn-outline-primary w-100">
+                        <i class="bi bi-pencil-square"></i> Vào nhập điểm
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (!Model.Any())
+    {
+        <div class="col-12">
+            <div class="alert alert-info">Bạn chưa được phân công lớp nào.</div>
+        </div>
+    }
+</div>

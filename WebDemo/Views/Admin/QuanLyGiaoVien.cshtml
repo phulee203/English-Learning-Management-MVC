@@ -1,0 +1,161 @@
+﻿@model IEnumerable<WebDemo.Models.GiaoVienViewModel>
+@{
+    ViewBag.Title = "Quản lý Giáo viên";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 fw-bold m-0">Quản lý Giáo viên</h1>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTeacherModal">
+        <i class="bi bi-plus-circle me-1"></i> Thêm giáo viên mới
+    </button>
+</div>
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped align-middle">
+                <thead>
+                    <tr>
+                        <th>Họ tên</th>
+                        <th>Email</th>
+                        <th>Số điện thoại</th>
+                        <th>Chuyên môn</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr id="row-gv-@item.MaGiaoVien">
+                            <td>@Html.DisplayFor(modelItem => item.HoTen)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                            <td>@Html.DisplayFor(modelItem => item.SoDienThoai)</td>
+                            <td>@Html.DisplayFor(modelItem => item.ChuyenMon)</td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-secondary btn-sua-gv"
+                                        title="Sửa"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#suaGiaoVienModal"
+                                        data-id="@item.MaGiaoVien">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger btn-xoa-gv"
+                                        title="Xóa"
+                                        data-id="@item.MaGiaoVien">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addTeacherModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            @using (Html.BeginForm("ThemGiaoVien", "Admin", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-header"><h5 class="modal-title">Thêm giáo viên mới</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+                <div class="modal-body">
+                    <div class="mb-3"><label class="form-label">Họ tên</label><input type="text" name="nguoiDung.HoTen" class="form-control" required></div>
+                    <div class="mb-3"><label class="form-label">Email</label><input type="email" name="nguoiDung.Email" class="form-control" required></div>
+                    <div class="mb-3"><label class="form-label">Số điện thoại</label><input type="tel" name="nguoiDung.SoDienThoai" class="form-control"></div>
+                    <div class="mb-3"><label class="form-label">Chuyên môn</label><input type="text" name="giaoVien.ChuyenMon" class="form-control" placeholder="Ví dụ: IELTS 8.0, TOEIC 990"></div>
+                </div>
+                <div class="modal-footer"><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Đóng</button><button type="submit" class="btn btn-primary">Lưu</button></div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="suaGiaoVienModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header"><h5 class="modal-title">Chỉnh sửa Giáo viên</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+            <div class="modal-body">
+                <input type="hidden" id="editGv_MaGiaoVien" name="giaoVien.MaGiaoVien" />
+
+                <div class="mb-3"><label class="form-label">Họ tên</label><input type="text" id="editGv_HoTen" name="nguoiDung.HoTen" class="form-control" required></div>
+                <div class="mb-3"><label class="form-label">Email</label><input type="email" id="editGv_Email" name="nguoiDung.Email" class="form-control" required></div>
+                <div class="mb-3"><label class="form-label">Số điện thoại</label><input type="tel" id="editGv_SoDienThoai" name="nguoiDung.SoDienThoai" class="form-control"></div>
+                <div class="mb-3"><label class="form-label">Địa chỉ</label><input type="text" id="editGv_DiaChi" name="nguoiDung.DiaChi" class="form-control"></div>
+                <div class="mb-3"><label class="form-label">Chuyên môn</label><input type="text" id="editGv_ChuyenMon" name="giaoVien.ChuyenMon" class="form-control"></div>
+            </div>
+            <div class="modal-footer"><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Đóng</button><button type="button" id="btnLuuSuaGiaoVien" class="btn btn-primary">Lưu thay đổi</button></div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            // -------- 1. XỬ LÝ NÚT XÓA GV --------
+            $('.btn-xoa-gv').on('click', function (e) {
+                e.preventDefault();
+                var idGiaoVien = $(this).data('id');
+                if (confirm('Bạn có chắc muốn xóa giáo viên này không?')) {
+                    $.ajax({
+                        url: '@Url.Action("XoaGiaoVien", "Admin")', type: 'POST', data: { id: idGiaoVien },
+                        success: function (result) {
+                            if (result.success) { $('#row-gv-' + idGiaoVien).remove(); alert(result.message); } else { alert(result.message); }
+                        }, error: function () { alert('Không thể kết nối đến máy chủ.'); }
+                    });
+                }
+            });
+
+            // -------- 2. (MỚI) XỬ LÝ NÚT SỬA GV --------
+            $('.btn-sua-gv').on('click', function () {
+                var idGiaoVien = $(this).data('id');
+                $.ajax({
+                    url: '@Url.Action("SuaGiaoVien", "Admin")' + '/' + idGiaoVien,
+                    type: 'GET',
+                    success: function (gv) {
+                        // Đổ data vào modal
+                        $('#editGv_MaGiaoVien').val(gv.MaGiaoVien);
+                        $('#editGv_HoTen').val(gv.HoTen);
+                        $('#editGv_Email').val(gv.Email);
+                        $('#editGv_SoDienThoai').val(gv.SoDienThoai);
+                        $('#editGv_DiaChi').val(gv.DiaChi);
+                        $('#editGv_ChuyenMon').val(gv.ChuyenMon);
+                    }, error: function () { alert("Không thể tải dữ liệu giáo viên."); }
+                });
+            });
+
+            // Khi bấm nút "Lưu thay đổi" trong Modal Sửa GV
+            $('#btnLuuSuaGiaoVien').on('click', function () {
+                var gvData = {
+                    nguoiDung: {
+                        HoTen: $('#editGv_HoTen').val(),
+                        Email: $('#editGv_Email').val(),
+                        SoDienThoai: $('#editGv_SoDienThoai').val(),
+                        DiaChi: $('#editGv_DiaChi').val()
+                    },
+                    giaoVien: {
+                        MaGiaoVien: $('#editGv_MaGiaoVien').val(),
+                        ChuyenMon: $('#editGv_ChuyenMon').val()
+                    }
+                };
+                $.ajax({
+                    url: '@Url.Action("SuaGiaoVien", "Admin")',
+                    type: 'POST',
+                    data: gvData,
+                    success: function (result) {
+                        if (result.success) {
+                            alert(result.message);
+                            var row = $('#row-gv-' + gvData.giaoVien.MaGiaoVien);
+                            row.find('td').eq(0).text(gvData.nguoiDung.HoTen);
+                            row.find('td').eq(1).text(gvData.nguoiDung.Email);
+                            row.find('td').eq(2).text(gvData.nguoiDung.SoDienThoai);
+                            row.find('td').eq(3).text(gvData.giaoVien.ChuyenMon);
+                            $('#suaGiaoVienModal').modal('hide');
+                        } else { alert(result.message); }
+                    }, error: function () { alert("Lưu thất bại."); }
+                });
+            });
+
+        });
+    </script>
+}

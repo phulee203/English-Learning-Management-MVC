@@ -1,0 +1,261 @@
+﻿@model IEnumerable<WebDemo.Models.LopHocViewModel>
+@{
+    ViewBag.Title = "Quản lý Lớp học";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 fw-bold m-0">Quản lý Lớp học</h1>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addClassModal">
+        <i class="bi bi-plus-circle me-1"></i> Tạo lớp mới
+    </button>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped align-middle">
+                <thead>
+                    <tr>
+                        <th scope="col">Tên lớp</th>
+                        <th scope="col">Khóa học</th>
+                        <th scope="col">Giáo viên</th>
+                        <th scope="col">Sĩ số</th>
+                        <th scope="col">Lịch học</th>
+                        <th scope="col">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var lop in Model)
+                    {
+                        <tr id="row-@lop.MaLop">
+                            <td data-tenlop="@lop.TenLop">@lop.TenLop</td>
+                            <td data-tenkh="@lop.TenKhoaHoc">@lop.TenKhoaHoc</td>
+                            <td data-tengv="@lop.TenGiaoVien">@lop.TenGiaoVien</td>
+                            <td>@lop.SiSoHienTai / @(lop.SiSoToiDa > 0 ? lop.SiSoToiDa : 12)</td>
+                            <td data-lichhoc="@lop.LichHoc">@lop.LichHoc</td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-secondary btn-sua-lop"
+                                        title="Sửa thông tin"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#suaLopModal"
+                                        data-id="@lop.MaLop">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-primary btn-phan-cong"
+                                        title="Phân công GV"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#phanCongModal"
+                                        data-malop="@lop.MaLop"
+                                        data-tenlop="@lop.TenLop">
+                                    <i class="bi bi-person-video3"></i>
+                                </button>
+                                <a href="@Url.Action("ChiTietLopHoc", "Admin", new { id = lop.MaLop })"
+                                   class="btn btn-sm btn-outline-info"
+                                   title="Xem danh sách học sinh">
+                                    <i class="bi bi-people-fill"></i>
+                                </a>
+                                <button class="btn btn-sm btn-outline-danger btn-xoa-lop"
+                                        title="Xóa lớp"
+                                        data-id="@lop.MaLop">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addClassModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            @using (Html.BeginForm("TaoLopMoi", "Admin", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-header">
+                    <h5 class="modal-title">Tạo lớp học mới</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Khóa học</label>
+                        @Html.DropDownList("MaKhoaHoc", ViewBag.DanhSachKhoaHoc as SelectList, "Chọn khóa học", new { @class = "form-select", required = "required" })
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Tên lớp</label>
+                        <input type="text" name="TenLop" class="form-control" placeholder="Ví dụ: IELTS 6.0+ Tối T2-4-6" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Lịch học / Phòng học</label>
+                        <input type="text" name="PhongHoc" class="form-control" placeholder="Ví dụ: T2-4-6 (18:30–20:30)">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Lưu và tạo</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="phanCongModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Phân công Giáo viên</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn đang phân công giáo viên cho lớp: <strong id="tenLopPhanCong" class="text-primary"></strong></p>
+                <div class="mb-3">
+                    <label class="form-label">Chọn giáo viên</label>
+                    @Html.DropDownList("DanhSachGiaoVien", ViewBag.DanhSachGiaoVien as SelectList, "Chọn giáo viên...", new { @class = "form-select", id = "selectGiaoVien" })
+                </div>
+                <input type="hidden" id="maLopPhanCong" value="0" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" id="btnLuuPhanCong">Lưu phân công</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="suaLopModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Chỉnh sửa Lớp học</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editMaLop" />
+
+                <div class="mb-3">
+                    <label class="form-label">Khóa học</label>
+                    @Html.DropDownList("editMaKhoaHoc", ViewBag.DanhSachKhoaHoc as SelectList, new { @class = "form-select", id = "selectEditKhoaHoc" })
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Tên lớp</label>
+                    <input type="text" id="editTenLop" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Lịch học / Phòng học</label>
+                    <input type="text" id="editPhongHoc" class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" id="btnLuuSuaLop">Lưu thay đổi</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+
+            // -------- 1. XỬ LÝ NÚT XÓA LỚP --------
+            $('.btn-xoa-lop').on('click', function (e) {
+                e.preventDefault();
+                var idLop = $(this).data('id');
+                if (confirm('Bạn có chắc muốn xóa lớp học này không? Mọi dữ liệu liên quan sẽ bị xóa.')) {
+                    $.ajax({
+                        url: '@Url.Action("XoaLop", "Admin")',
+                        type: 'POST',
+                        data: { id: idLop },
+                        success: function (result) {
+                            if (result.success) {
+                                $('#row-' + idLop).fadeOut();
+                                alert(result.message);
+                            } else {
+                                alert(result.message);
+                            }
+                        },
+                        error: function () { alert('Không thể kết nối đến máy chủ.'); }
+                    });
+                }
+            });
+
+            // -------- 2. XỬ LÝ NÚT PHÂN CÔNG GIÁO VIÊN --------
+            var maLopHienTai = 0;
+            $('.btn-phan-cong').on('click', function () {
+                maLopHienTai = $(this).data('malop');
+                $('#tenLopPhanCong').text($(this).data('tenlop'));
+                $('#maLopPhanCong').val(maLopHienTai);
+            });
+
+            $('#btnLuuPhanCong').on('click', function () {
+                var maGiaoVienChon = $('#selectGiaoVien').val();
+                if (!maGiaoVienChon) { alert('Vui lòng chọn một giáo viên.'); return; }
+
+                $.ajax({
+                    url: '@Url.Action("PhanCongGiaoVien", "Admin")',
+                    type: 'POST',
+                    data: { maLop: maLopHienTai, maGiaoVien: maGiaoVienChon },
+                    success: function (result) {
+                        if (result.success) {
+                            alert(result.message);
+                            $('#row-' + maLopHienTai).find('td').eq(2).text(result.tenGv); // Cập nhật cột GV trên bảng
+                            $('#phanCongModal').modal('hide');
+                        } else {
+                            alert(result.message);
+                        }
+                    },
+                    error: function () { alert('Đã xảy ra lỗi khi lưu phân công.'); }
+                });
+            });
+
+            // -------- 3. XỬ LÝ NÚT SỬA LỚP --------
+            $('.btn-sua-lop').on('click', function () {
+                var idLop = $(this).data('id');
+                // Gọi AJAX lấy thông tin
+                $.ajax({
+                    url: '@Url.Action("SuaLop", "Admin")' + '/' + idLop,
+                    type: 'GET',
+                    success: function (lop) {
+                        // Đổ data vào modal
+                        $('#editMaLop').val(lop.MaLop);
+                        $('#selectEditKhoaHoc').val(lop.MaKhoaHoc); // Set giá trị dropdown
+                        $('#editTenLop').val(lop.TenLop);
+                        $('#editPhongHoc').val(lop.PhongHoc);
+                    },
+                    error: function () { alert("Không thể tải dữ liệu lớp."); }
+                });
+            });
+
+            // Lưu sửa lớp
+            $('#btnLuuSuaLop').on('click', function () {
+                var lopData = {
+                    MaLop: $('#editMaLop').val(),
+                    MaKhoaHoc: $('#selectEditKhoaHoc').val(), // Lấy từ dropdown
+                    TenLop: $('#editTenLop').val(),
+                    PhongHoc: $('#editPhongHoc').val()
+                };
+
+                $.ajax({
+                    url: '@Url.Action("SuaLop", "Admin")',
+                    type: 'POST',
+                    data: lopData,
+                    success: function (result) {
+                        if (result.success) {
+                            alert(result.message);
+                            // Reload trang để cập nhật tên khóa học mới (nếu đổi khóa)
+                            location.reload();
+                        } else {
+                            alert(result.message);
+                        }
+                    },
+                    error: function () { alert("Lưu thất bại."); }
+                });
+            });
+
+        });
+    </script>
+}

@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Tạo Báo cáo";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h1 class="h3 fw-bold mb-4">Tạo Báo cáo</h1>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <h5 class="card-title">Báo cáo Doanh thu Học phí</h5>
+        <p class="card-text text-secondary">Xuất báo cáo học phí đã đóng theo khoảng thời gian.</p>
+
+        @using (Html.BeginForm("XuatBaoCaoHocPhi", "Admin", FormMethod.Post))
+        {
+            <div class="row g-3 align-items-end">
+                <div class="col-md-4">
+                    <label class="form-label">Từ ngày</label>
+                    <input type="date" name="tuNgay" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Đến ngày</label>
+                    <input type="date" name="denNgay" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary w-100">Xem báo cáo</button>
+                </div>
+            </div>
+        }
+
+        @if (TempData["BaoCaoError"] != null)
+        {
+            <div class="alert alert-danger mt-3">@TempData["BaoCaoError"]</div>
+        }
+    </div>
+</div>

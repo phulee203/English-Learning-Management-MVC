@@ -1,0 +1,91 @@
+﻿@{
+    ViewBag.Title = "Đăng ký môn học mới";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h1 class="h3 fw-bold mb-4">Đăng ký môn học mới</h1>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+
+                @if (TempData["Success"] != null)
+                {
+                    <div class="alert alert-success"><i class="bi bi-check-circle"></i> @TempData["Success"]</div>
+                }
+                @if (TempData["Error"] != null)
+                {
+                    <div class="alert alert-danger"><i class="bi bi-exclamation-triangle"></i> @TempData["Error"]</div>
+                }
+
+                <h5 class="card-title mb-4">Chọn khóa học muốn đăng ký thêm</h5>
+
+                @using (Html.BeginForm("LuuDangKy", "HocSinh", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Khóa học</label>
+                        @Html.DropDownList("maKhoaHoc", ViewBag.DanhSachKhoaHoc as SelectList, "--- Chọn khóa học ---", new { @class = "form-select", required = "required", id = "ddlKhoaHoc" })
+                        <div class="form-text text-muted" id="pricePreview">Học phí: 0đ</div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Ca học mong muốn</label>
+                        <select name="caHoc" class="form-select">
+                            <option value="T2-4-6">Thứ 2 - 4 - 6 (Tối)</option>
+                            <option value="T3-5-7">Thứ 3 - 5 - 7 (Tối)</option>
+                            <option value="CuoiTuan">Cuối tuần (T7 - CN)</option>
+                        </select>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-plus-circle"></i> Xác nhận đăng ký
+                        </button>
+                        <a href="@Url.Action("KetQuaHocTap")" class="btn btn-outline-secondary">Hủy</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card bg-primary text-white border-0 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-info-circle"></i> Lưu ý</h5>
+                <p class="card-text small">
+                    Sau khi đăng ký trực tuyến thành công:
+                </p>
+                <ul class="small ps-3">
+                    <li>Hệ thống sẽ ghi nhận môn học vào hồ sơ của bạn.</li>
+                    <li>Trạng thái học phí sẽ là <strong>"Chưa đóng"</strong>.</li>
+                    <li>Vui lòng hoàn tất đóng học phí tại văn phòng hoặc chuyển khoản để được vào lớp chính thức.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $('#ddlKhoaHoc').change(function () {
+            var text = $(this).find("option:selected").text();
+            var price = "Đang cập nhật";
+
+            if (text.includes("IELTS")) price = "5.500.000₫";
+            else if (text.includes("Giao tiếp")) price = "2.900.000₫";
+            else if (text.includes("TOEIC")) price = "3.400.000₫";
+            else if (text.includes("Toán")) price = "3.000.000₫";
+            else if (text.includes("Lý")) price = "4.500.000₫";
+            else if (text.includes("Hóa")) price = "2.500.000₫";
+
+            if ($(this).val() != "") {
+                $('#pricePreview').html("Học phí dự kiến: <strong class='text-primary'>" + price + "</strong>");
+            } else {
+                $('#pricePreview').text("Học phí: 0đ");
+            }
+        });
+    </script>
+}

@@ -1,0 +1,71 @@
+<h1 class="h3 fw-bold mb-4">Nhập điểm học viên</h1>
+
+<div class="card border-0 shadow-sm mb-4">
+    <div class="card-body">
+        <p class="fw-bold">Chọn lớp để nhập điểm</p>
+        <div class="row g-3">
+            <div class="col-md-5">
+                <label class="form-label">Chọn lớp</label>
+                <select class="form-select">
+                    <option>IELTS 6.0+ (Tối T2-4-6)</option>
+                    <option>Giao tiếp Căn bản (Tối T3-5-7)</option>
+                </select>
+            </div>
+            <div class="col-md-5">
+                <label class="form-label">Chọn môn/Bài kiểm tra</label>
+                <select class="form-select">
+                    <option>Điểm giữa kỳ</option>
+                    <option>Điểm cuối kỳ</option>
+                </select>
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button class="btn btn-primary w-100">Tải danh sách</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <h5 class="card-title mb-3">Danh sách lớp: IELTS 6.0+ (Tối T2-4-6)</h5>
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th scope="col">STT</th>
+                        <th scope="col">Họ tên</th>
+                        <th scope="col">Email</th>
+                        <th scope="col" style="width: 150px;">Điểm giữa kỳ</th>
+                        <th scope="col" style="width: 150px;">Điểm cuối kỳ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Nguyễn Thị An</td>
+                        <td>an.nguyen@email.com</td>
+                        <td><input type="number" class="form-control" min="0" max="10" step="0.1"></td>
+                        <td><input type="number" class="form-control" min="0" max="10" step="0.1"></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Lê Văn Bình</td>
+                        <td>binh.le@email.com</td>
+                        <td><input type="number" class="form-control" min="0" max="10" step="0.1"></td>
+                        <td><input type="number" class="form-control" min="0" max="10" step="0.1"></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Phạm Thu Hằng</td>
+                        <td>hang.pham@email.com</td>
+                        <td><input type="number" class="form-control" min="0" max="10" step="0.1"></td>
+                        <td><input type="number" class="form-control" min="0" max="10" step="0.1"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-end mt-3">
+            <button class="btn btn-primary btn-lg">Lưu lại điểm</button>
+        </div>
+    </div>
+</div>

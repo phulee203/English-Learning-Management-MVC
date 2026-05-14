@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="30377be35b9c4c29af610dc3d5c38262" Name="Diagram1">
+        <EntityTypeShape EntityType="QuanLyHocThemModel.Admin" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyHocThemModel.BaoCao" Width="1.5" PointX="3" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyHocThemModel.DangKyLop" Width="1.5" PointX="5.25" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyHocThemModel.Diem" Width="1.5" PointX="8.25" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyHocThemModel.GiaoVien" Width="1.5" PointX="3" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyHocThemModel.GuiThongBao" Width="1.5" PointX="7.5" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyHocThemModel.HocPhi" Width="1.5" PointX="5.25" PointY="18.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyHocThemModel.HocSinh" Width="1.5" PointX="3" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyHocThemModel.KhoaHoc" Width="1.5" PointX="0.75" PointY="20.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyHocThemModel.LichHoc" Width="1.5" PointX="5.25" PointY="22.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyHocThemModel.LopHoc" Width="1.5" PointX="3" PointY="19.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyHocThemModel.NguoiDung" Width="1.5" PointX="0.75" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyHocThemModel.PhanCongGiaoVien" Width="1.5" PointX="5.25" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyHocThemModel.PhuHuynh" Width="1.5" PointX="3" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyHocThemModel.ThongBao" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
+        <AssociationConnector Association="QuanLyHocThemModel.FK__Admin__MaAdmin__59063A47" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyHocThemModel.FK__ThongBao__MaAdmi__7A672E12" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyHocThemModel.FK__BaoCao__MaNguoiT__03F0984C" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyHocThemModel.FK__DangKyLop__MaHoc__6383C8BA" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyHocThemModel.FK__DangKyLop__MaLop__6477ECF3" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyHocThemModel.FK__Diem__MaHocSinh__6C190EBB" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyHocThemModel.FK__Diem__MaKhoaHoc__6D0D32F4" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyHocThemModel.FK__GiaoVien__MaGiao__5629CD9C" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyHocThemModel.FK__PhanCongG__MaGia__68487DD7" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyHocThemModel.FK__GuiThongB__MaNgu__7F2BE32F" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyHocThemModel.FK__GuiThongB__MaTho__7E37BEF6" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyHocThemModel.FK__HocPhi__MaHocSin__75A278F5" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyHocThemModel.FK__HocPhi__MaKhoaHo__76969D2E" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyHocThemModel.FK__HocSinh__MaHocSi__4F7CD00D" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyHocThemModel.FK__HocSinh__MaPhuHu__5070F446" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyHocThemModel.FK__LopHoc__MaKhoaHo__5DCAEF64" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyHocThemModel.FK__LichHoc__MaLop__70DDC3D8" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyHocThemModel.FK__PhanCongG__MaLop__6754599E" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyHocThemModel.FK__PhuHuynh__MaPhuH__534D60F1" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

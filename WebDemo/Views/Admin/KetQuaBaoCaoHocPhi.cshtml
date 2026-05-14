@@ -1,0 +1,59 @@
+﻿@model IEnumerable<WebDemo.Models.HocPhi>
+@{
+    ViewBag.Title = "Kết quả Báo cáo";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+
+    // Tính tổng doanh thu
+    decimal tongDoanhThu = 0;
+    foreach (var item in Model)
+    {
+        tongDoanhThu += item.SoTien;
+    }
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="h3 fw-bold m-0">Báo cáo Doanh thu Học phí</h1>
+        <span class="text-secondary">Từ ngày @ViewBag.TuNgay đến ngày @ViewBag.DenNgay</span>
+    </div>
+    <a href="@Url.Action("TaoBaoCao", "Admin")" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Quay lại
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-white py-3">
+        <h5 class="m-0">Tổng doanh thu: <span class="text-danger fw-bold">@tongDoanhThu.ToString("N0")₫</span></h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped align-middle">
+                <thead>
+                    <tr>
+                        <th>Ngày đóng</th>
+                        <th>Học sinh</th>
+                        <th>Khóa học</th>
+                        <th>Số tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.NgayDong.Value.ToString("dd/MM/yyyy")</td>
+                            <td>@item.HocSinh.NguoiDung.HoTen</td>
+                            <td>@item.KhoaHoc.TenKhoaHoc</td>
+                            <td>@item.SoTien.ToString("N0")₫</td>
+                        </tr>
+                    }
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center text-secondary">Không có dữ liệu trong khoảng thời gian này.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

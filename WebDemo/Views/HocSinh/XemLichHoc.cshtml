@@ -1,0 +1,73 @@
+﻿@model IEnumerable<WebDemo.Models.LichHocViewModel>
+@{
+    ViewBag.Title = "Lịch học của tôi";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h1 class="h3 fw-bold mb-4">Thời khóa biểu</h1>
+
+<div class="row g-4">
+    @if (!Model.Any())
+    {
+        <div class="col-12">
+            <div class="alert alert-info">
+                <i class="bi bi-info-circle"></i> Bạn chưa có lịch học nào. Vui lòng đăng ký môn học trước.
+            </div>
+        </div>
+    }
+    else
+    {
+        // Nhóm lịch học theo Thứ để hiển thị cho đẹp
+        // Order: 2, 3, 4, 5, 6, 7, CN
+        var listThu = new List<string> { "2", "3", "4", "5", "6", "7", "CN" };
+
+        foreach (var thu in listThu)
+        {
+            var lichTrongNgay = Model.Where(m => m.Thu == thu).OrderBy(m => m.GioBatDau).ToList();
+            if (lichTrongNgay.Count > 0)
+            {
+                <div class="col-md-6 col-xl-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-header bg-white border-bottom-0 pt-3">
+                            <h5 class="fw-bold text-primary m-0">
+                                @(thu == "CN" ? "Chủ Nhật" : "Thứ " + thu)
+                            </h5>
+                        </div>
+                        <div class="card-body pt-0">
+                            @foreach (var item in lichTrongNgay)
+                            {
+                                <div class="d-flex align-items-start border-bottom py-3 last-no-border">
+                                    <div class="me-3 text-center" style="min-width: 60px;">
+                                        <div class="fw-bold text-dark">
+                                            @item.GioBatDau.Value.ToString(@"hh\:mm")
+                                        </div>
+                                        <div class="small text-muted">
+                                            @item.GioKetThuc.Value.ToString(@"hh\:mm")
+                                        </div>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="fw-bold mb-1">@item.TenMon</h6>
+                                        <div class="small mb-1">
+                                            <i class="bi bi-people-fill text-secondary"></i> @item.TenLop
+                                        </div>
+                                        <div class="small text-muted">
+                                            <i class="bi bi-geo-alt-fill"></i> Phòng: <strong>@item.PhongHoc</strong>
+                                            <span class="mx-1">|</span>
+                                            <i class="bi bi-person-badge"></i> @item.GiaoVien
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    }
+</div>
+
+<style>
+    .last-no-border:last-child {
+        border-bottom: none !important;
+    }
+</style>

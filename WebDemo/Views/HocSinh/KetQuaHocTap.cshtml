@@ -1,0 +1,69 @@
+﻿@model IEnumerable<WebDemo.Models.KetQuaHocTapViewModel>
+@{
+    ViewBag.Title = "Kết quả học tập";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h1 class="h3 fw-bold mb-4">Kết quả học tập: <span class="text-primary">@ViewBag.TenHocSinh</span></h1>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <h5 class="card-title mb-3">Bảng điểm tổng hợp</h5>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">Khóa học</th>
+                        <th scope="col" class="text-center">Điểm giữa kỳ</th>
+                        <th scope="col" class="text-center">Điểm cuối kỳ</th>
+                        <th scope="col" class="text-center">Tổng kết</th>
+                        <th scope="col" class="text-center">Trạng thái</th>
+                        <th scope="col">Nhận xét</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        // Tính điểm tổng kết (Giả sử: (GK + CK*2) / 3)
+                        double? tongKet = null;
+                        if (item.DiemGiuaKy != null && item.DiemCuoiKy != null)
+                        {
+                            tongKet = Math.Round(((double)item.DiemGiuaKy + (double)item.DiemCuoiKy * 2) / 3, 1);
+                        }
+
+                        <tr>
+                            <td class="fw-bold">@item.TenKhoaHoc</td>
+                            <td class="text-center">@(item.DiemGiuaKy != null ? item.DiemGiuaKy.ToString() : "-")</td>
+                            <td class="text-center">@(item.DiemCuoiKy != null ? item.DiemCuoiKy.ToString() : "-")</td>
+                            <td class="text-center fw-bold text-primary">
+                                @(tongKet != null ? tongKet.ToString() : "-")
+                            </td>
+                            <td class="text-center">
+                                @if (tongKet >= 5.0)
+                                {
+                                    <span class="badge bg-success">Đạt</span>
+                                }
+                                else if (tongKet != null)
+                                {
+                                    <span class="badge bg-danger">Chưa đạt</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">Đang học</span>
+                                }
+                            </td>
+                            <td><small class="text-muted">@item.NhanXet</small></td>
+                        </tr>
+                    }
+
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center py-4">Chưa có dữ liệu điểm môn học nào.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

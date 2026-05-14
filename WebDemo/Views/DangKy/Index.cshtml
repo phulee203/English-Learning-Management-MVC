@@ -1,0 +1,304 @@
+﻿@model WebDemo.Models.DangKyViewModel
+@{
+    ViewBag.Title = "Đăng ký khóa học";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Sử dụng Layout chính (có Navbar/Footer)
+}
+
+<header class="hero py-5" style="background: linear-gradient(180deg, rgba(13,110,253,.08), rgba(13,110,253,.02));">
+    <div class="container py-4">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-6">
+                <h1 class="display-5 fw-bold mb-3">Nâng trình tiếng Anh của bạn nhanh & chắc</h1>
+                <p class="lead text-secondary">Lộ trình rõ ràng, lớp nhỏ tối đa 12 học viên. Đăng ký online và thanh toán an toàn chỉ trong vài phút.</p>
+                <div class="d-flex gap-2 mt-4">
+                    <a href="#khoahoc" class="btn btn-primary btn-lg">Xem khóa học</a>
+                    <a href="#dangky-form" class="btn btn-outline-primary btn-lg">Đăng ký ngay</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="ratio ratio-16x9 rounded-3 overflow-hidden shadow-sm bg-white">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Video giới thiệu" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section class="py-5 border-bottom">
+    <div class="container">
+        <div class="row text-center g-4">
+            <div class="col-6 col-lg-3">
+                <div class="p-3">
+                    <div class="fw-bold fs-5">Giáo viên chuẩn</div>
+                    <div class="text-secondary small">IELTS/CEFR, giàu kinh nghiệm</div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="p-3">
+                    <div class="fw-bold fs-5">Lịch học linh hoạt</div>
+                    <div class="text-secondary small">Sáng / Tối / Cuối tuần</div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="p-3">
+                    <div class="fw-bold fs-5">Sĩ số thấp</div>
+                    <div class="text-secondary small">Tối đa 12 học viên/lớp</div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="p-3">
+                    <div class="fw-bold fs-5">Thanh toán online</div>
+                    <div class="text-secondary small">Thẻ, chuyển khoản, ví</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="khoahoc" class="py-5">
+    <div class="container">
+        <h2 class="fw-bold mb-4 text-center">Khóa học phổ biến</h2>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title fw-bold text-primary">Giao tiếp Cơ bản</h5>
+                        <p class="card-text text-secondary">Dành cho người mất gốc, tập trung Speaking & Listening.</p>
+                        <ul class="small text-secondary mb-4">
+                            <li>Thời lượng: 24 buổi</li>
+                            <li>Học phí: <strong>2.900.000₫</strong></li>
+                        </ul>
+                        <button class="btn btn-outline-primary mt-auto w-100 btn-chon-khoa"
+                                data-id-khoa="1" data-ten="Giao tiếp Cơ bản" data-gia="2900000">
+                            Chọn khóa này
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-primary">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title fw-bold text-primary">Luyện thi IELTS 6.0+</h5>
+                        <span class="badge bg-danger position-absolute top-0 end-0 m-3">HOT</span>
+                        <p class="card-text text-secondary">Lộ trình 8 tuần, chiến lược 4 kỹ năng có bài mock test.</p>
+                        <ul class="small text-secondary mb-4">
+                            <li>Thời lượng: 32 buổi</li>
+                            <li>Học phí: <strong>5.500.000₫</strong></li>
+                        </ul>
+                        <button class="btn btn-primary mt-auto w-100 btn-chon-khoa"
+                                data-id-khoa="2" data-ten="IELTS 6.0+" data-gia="5500000">
+                            Chọn khóa này
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title fw-bold text-primary">TOEIC Foundation</h5>
+                        <p class="card-text text-secondary">Ôn trọng tâm Part 2,3,5,7; mẹo làm bài, bộ đề cập nhật.</p>
+                        <ul class="small text-secondary mb-4">
+                            <li>Thời lượng: 24 buổi</li>
+                            <li>Học phí: <strong>3.400.000₫</strong></li>
+                        </ul>
+                        <button class="btn btn-outline-primary mt-auto w-100 btn-chon-khoa"
+                                data-id-khoa="3" data-ten="TOEIC Foundation" data-gia="3400000">
+                            Chọn khóa này
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="dangky-form" class="py-5 bg-light border-top">
+    <div class="container">
+
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Đăng ký & Thanh toán</h2>
+            <p class="text-secondary">Điền thông tin bên dưới để giữ chỗ ngay lập tức.</p>
+        </div>
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success text-center mb-5 p-4 shadow-sm">
+                <h3 class="text-success"><i class="bi bi-check-circle-fill"></i> Đăng ký thành công!</h3>
+                <p class="lead">@TempData["Success"]</p>
+                <div class="mt-3">
+                    <a href="@Url.Action("Login", "Account")" class="btn btn-success">Đăng nhập ngay</a>
+                </div>
+            </div>
+        }
+
+        @using (Html.BeginForm("XuLyThanhToan", "DangKy", FormMethod.Post, new { @class = "needs-validation" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="row g-5">
+                <div class="col-lg-8">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body p-4">
+                            <h4 class="mb-4">1. Thông tin học viên</h4>
+                            <div class="row g-3">
+                                <div class="col-sm-6">
+                                    <label class="form-label fw-bold">Họ và tên <span class="text-danger">*</span></label>
+                                    @Html.TextBoxFor(m => m.HoTen, new { @class = "form-control", placeholder = "Nguyễn Văn A", required = "required" })
+                                    @Html.ValidationMessageFor(m => m.HoTen, "", new { @class = "text-danger small" })
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="form-label fw-bold">Email <span class="text-danger">*</span></label>
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email", placeholder = "email@example.com", required = "required" })
+                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger small" })
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label class="form-label fw-bold">Mật khẩu <span class="text-danger">*</span></label>
+                                    @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control", placeholder = "******", required = "required" })
+                                    @Html.ValidationMessageFor(m => m.MatKhau, "", new { @class = "text-danger small" })
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label class="form-label fw-bold">Số điện thoại</label>
+                                    @Html.TextBoxFor(m => m.SoDienThoai, new { @class = "form-control", placeholder = "0901xxxxxx" })
+                                </div>
+
+                                <div class="col-12">
+                                    <label class="form-label">Địa chỉ</label>
+                                    @Html.TextBoxFor(m => m.DiaChi, new { @class = "form-control", placeholder = "Quận/Huyện, TP..." })
+                                </div>
+
+                                <div class="col-12 mt-4">
+                                    <h4 class="mb-3">2. Thông tin khóa học</h4>
+                                </div>
+
+                                <div class="col-12">
+                                    <label class="form-label fw-bold">Chọn khóa học <span class="text-danger">*</span></label>
+                                    @Html.DropDownListFor(m => m.MaKhoaHoc,
+                                        (IEnumerable<SelectListItem>)ViewBag.DanhSachKhoaHoc,
+                                        "--- Chọn khóa học ---",
+                                        new { @class = "form-select", id = "ddlKhoaHoc", required = "required" })
+                                    @Html.ValidationMessageFor(m => m.MaKhoaHoc, "", new { @class = "text-danger small" })
+                                </div>
+
+                            </div>
+
+                            <hr class="my-4">
+
+                            <h4 class="mb-3">3. Thanh toán (Demo)</h4>
+                            <div class="form-check mb-2">
+                                <input id="payCard" name="PhuongThucThanhToan" type="radio" class="form-check-input" value="The" checked>
+                                <label class="form-check-label" for="payCard">Thẻ Quốc tế (Visa/Mastercard)</label>
+                            </div>
+                            <div class="form-check mb-3">
+                                <input id="payBank" name="PhuongThucThanhToan" type="radio" class="form-check-input" value="ChuyenKhoan">
+                                <label class="form-check-label" for="payBank">Chuyển khoản Ngân hàng (QR Code)</label>
+                            </div>
+
+                            <div id="cardFields" class="row g-3 p-3 bg-light rounded">
+                                <div class="col-md-6">
+                                    <label class="form-label small">Số thẻ</label>
+                                    <input type="text" class="form-control" placeholder="0000 0000 0000 0000" disabled>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label small">Hết hạn</label>
+                                    <input type="text" class="form-control" placeholder="MM/YY" disabled>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label small">CVC</label>
+                                    <input type="text" class="form-control" placeholder="123" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer p-4 bg-white border-top-0">
+                            <button class="btn btn-primary btn-lg w-100" type="submit">
+                                <i class="bi bi-lock-fill"></i> Xác nhận & Thanh toán
+                            </button>
+                            <p class="text-secondary small mt-2 text-center fst-italic">
+                                * Lưu ý: Đây là hệ thống demo, không trừ tiền thật trong tài khoản của bạn.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="card shadow-sm border-0 sticky-top" style="top: 100px;">
+                        <div class="card-header bg-white py-3">
+                            <h5 class="card-title m-0 fw-bold">Tóm tắt đơn hàng</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush mb-3">
+                                <li class="list-group-item d-flex justify-content-between lh-sm px-0">
+                                    <div>
+                                        <h6 class="my-0" id="lblTenKhoa">Chưa chọn khóa</h6>
+                                        <small class="text-muted">Học phí trọn gói</small>
+                                    </div>
+                                    <span class="text-muted" id="lblGiaTien">0₫</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between lh-sm px-0">
+                                    <div>
+                                        <h6 class="my-0">Phí ghi danh</h6>
+                                    </div>
+                                    <span class="text-success">Miễn phí</span>
+                                </li>
+                            </ul>
+                            <hr>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="fw-bold">Tổng cộng</span>
+                                <span class="fs-4 fw-bold text-primary" id="lblTongCong">0₫</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            // Hàm định dạng tiền tệ
+            function formatMoney(amount) {
+                return amount.toLocaleString('vi-VN') + '₫';
+            }
+
+            // Logic 1: Khi thay đổi Dropdown khóa học -> Cập nhật giá tiền bên phải
+            $('#ddlKhoaHoc').change(function () {
+                var text = $(this).find("option:selected").text();
+                var giaTien = 0;
+
+                // Giả lập giá tiền dựa trên tên (Vì Dropdown chỉ có Value là ID)
+                // Trong thực tế nên dùng Ajax gọi về server lấy giá
+                if (text.includes("IELTS")) giaTien = 5500000;
+                else if (text.includes("Giao tiếp")) giaTien = 2900000;
+                else if (text.includes("TOEIC")) giaTien = 3400000;
+
+                // Cập nhật giao diện
+                if ($(this).val() == "") {
+                    $('#lblTenKhoa').text("Chưa chọn khóa");
+                    $('#lblGiaTien').text("0₫");
+                    $('#lblTongCong').text("0₫");
+                } else {
+                    $('#lblTenKhoa').text(text);
+                    $('#lblGiaTien').text(formatMoney(giaTien));
+                    $('#lblTongCong').text(formatMoney(giaTien));
+                }
+            });
+
+            // Logic 2: Khi bấm nút "Chọn khóa này" ở danh sách trên -> Tự động điền xuống form
+            $('.btn-chon-khoa').click(function () {
+                // Lấy thông tin từ nút bấm
+                var idKhoa = $(this).data('id-khoa');
+
+                // Cuộn trang xuống form
+                $('html, body').animate({
+                    scrollTop: $("#dangky-form").offset().top - 80
+                }, 100);
+
+                // Set giá trị cho Dropdown và kích hoạt sự kiện change để cập nhật giá
+                $('#ddlKhoaHoc').val(idKhoa).trigger('change');
+            });
+        });
+    </script>
+}

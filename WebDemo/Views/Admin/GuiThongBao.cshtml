@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Gửi Thông báo";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h1 class="h3 fw-bold mb-4">Gửi Thông báo</h1>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        @if (TempData["GuiTB_Success"] != null)
+        {
+            <div class="alert alert-success">@TempData["GuiTB_Success"]</div>
+        }
+        @if (TempData["GuiTB_Error"] != null)
+        {
+            <div class="alert alert-danger">@TempData["GuiTB_Error"]</div>
+        }
+
+        @using (Html.BeginForm("GuiThongBao", "Admin", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="mb-3">
+                <label class="form-label">Tiêu đề</label>
+                <input type="text" name="TieuDe" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Nội dung</label>
+                <textarea name="NoiDung" class="form-control" rows="5" required></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Gửi đến</label>
+                @Html.ListBox("dsNguoiNhan", ViewBag.DanhSachNguoiDung as MultiSelectList, new { @class = "form-control", multiple = "multiple", size = "10" })
+                <small class="form-text text-secondary">Giữ Ctrl để chọn nhiều người.</small>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg">Gửi thông báo</button>
+        }
+    </div>
+</div>
